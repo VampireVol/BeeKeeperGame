@@ -10,7 +10,14 @@ public class TabGroup : MonoBehaviour
     public Color32 tabActive;
     public TabButton selectedTab;
     public List<GameObject> objectsToSwap;
-    
+
+    private void Awake()
+    {
+        if (selectedTab != null)
+        {
+            OnTabSelected(selectedTab);
+        }
+    }
     public void Subscribe(TabButton button)
     {
         if (tabButtons == null)
@@ -40,7 +47,7 @@ public class TabGroup : MonoBehaviour
         selectedTab = button;
         ResetTabs();
         button.background.color = tabActive;
-        int index = button.transform.GetSiblingIndex() - 1;
+        int index = button.transform.GetSiblingIndex();
         for (int i = 0; i < objectsToSwap.Count; ++i)
         {
             if (i == index)
