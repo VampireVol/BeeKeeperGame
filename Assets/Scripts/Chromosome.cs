@@ -1,51 +1,52 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Chromosome
+public abstract class Chromosome
 {
-    int value;
-    bool dominant;
-    Type type;
+    public int value;
+    public bool dominant;
 
-    Chromosome(int value, bool dominant, Type type)
+    protected Chromosome(int value, bool dominant)
     {
         this.value = value;
         this.dominant = dominant;
-        this.type = type;
+    }
+
+    public override bool Equals(object obj)
+    {
+        return obj is Chromosome chromosome &&
+               value == chromosome.value &&
+               dominant == chromosome.dominant;
+    }
+
+    public override int GetHashCode()
+    {
+        int hashCode = 1134590987;
+        hashCode = hashCode * -1521134295 + value.GetHashCode();
+        hashCode = hashCode * -1521134295 + dominant.GetHashCode();
+        return hashCode;
     }
 
     public bool isDominant()
     {
         return dominant;
     }
-}
-enum Type
-{
-    Species = 0,
-    LifeSpan,
-    Speed,
-    Fertility
+
+    public virtual Chromosome Inherit(Chromosome parent)
+    {
+        if (Random.value > 0.5f)
+        {
+            return this;
+        }
+        else
+        {
+            return parent;
+        }
+    }
+
+    public virtual Chromosome TryMutate(Chromosome parent)
+    {
+        return null;
+    }
 }
 
-enum Speed
-{
-    Slowest = 0,
-    Slower,
-    Slow,
-    Normal,
-    Fast,
-    Faster,
-    Fastest
-}
-
-enum LifeSpan
-{
-    Shortest = 0,
-    Shorter,
-    Short,
-    Normal,
-    Long,
-    Longer,
-    Longets
-}
