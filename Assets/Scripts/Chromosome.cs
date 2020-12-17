@@ -1,36 +1,22 @@
 ﻿using System.Collections;
 using UnityEngine;
 
+[System.Serializable]
 public abstract class Chromosome
 {
-    public int value;
     public bool dominant;
 
-    protected Chromosome(int value, bool dominant)
-    {
-        this.value = value;
+    protected Chromosome(bool dominant)
+    { 
         this.dominant = dominant;
-    }
-
-    public override bool Equals(object obj)
-    {
-        return obj is Chromosome chromosome &&
-               value == chromosome.value &&
-               dominant == chromosome.dominant;
-    }
-
-    public override int GetHashCode()
-    {
-        int hashCode = 1134590987;
-        hashCode = hashCode * -1521134295 + value.GetHashCode();
-        hashCode = hashCode * -1521134295 + dominant.GetHashCode();
-        return hashCode;
     }
 
     public bool isDominant()
     {
         return dominant;
     }
+
+    public abstract int GetValue();
 
     public virtual Chromosome Inherit(Chromosome parent)
     {

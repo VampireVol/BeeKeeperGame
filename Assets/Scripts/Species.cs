@@ -1,12 +1,21 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class Species : Chromosome
 {
-    public Species(ValueType value, bool dominant)
-        : base((int)value, dominant)
+    public ValueType value;
+
+    public Species(ValueType value)
+        : base(false)
     {
-        
+        this.value = value;
+    }
+
+    public Species(ValueType value, bool dominant)
+        : base(dominant)
+    {
+        this.value = value;
     }
 
     public enum ValueType
@@ -29,7 +38,7 @@ public class Species : Chromosome
         List<SpeciesDictionary.MutationInfo> list = SpeciesDictionary.GetMutationInfo((ValueType)value);
         if (list != null)
         {
-            var val = (ValueType)parent.value;
+            var val = (ValueType)parent.GetValue();
             foreach (var item in list)
             {
                 if (item.SecondSpecies == val)
@@ -49,7 +58,7 @@ public class Species : Chromosome
         List<SpeciesDictionary.MutationInfo> list = SpeciesDictionary.GetMutationInfo((ValueType)value);
         if (list != null)
         {
-            var val = (ValueType)parent.value;
+            var val = (ValueType)parent.GetValue();
             foreach (var item in list)
             {
                 if (item.SecondSpecies == val)
@@ -62,6 +71,11 @@ public class Species : Chromosome
             }
         }
         return base.TryMutate(parent);
+    }
+
+    public override int GetValue()
+    {
+        return (int)value;
     }
 }
 
