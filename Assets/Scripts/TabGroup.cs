@@ -10,6 +10,7 @@ public class TabGroup : MonoBehaviour
     public Color32 tabActive;
     public TabButton selectedTab;
     public List<GameObject> objectsToSwap;
+    public List<GameObject> objectsToSwap2;
 
     private void Awake()
     {
@@ -57,6 +58,17 @@ public class TabGroup : MonoBehaviour
             else
             {
                 objectsToSwap[i].SetActive(false);
+            }
+        }
+        for (int i = 0; i < objectsToSwap2.Count; ++i)
+        {
+            if (i == index)
+            {
+                objectsToSwap2[i].SetActive(true);
+            }
+            else
+            {
+                objectsToSwap2[i].SetActive(false);
             }
         }
     }
