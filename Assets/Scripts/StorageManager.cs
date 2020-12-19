@@ -54,11 +54,11 @@ public class StorageManager : MonoBehaviour
     public void RenderBeeItemsPage(int index, BeeType beeType)
     {
         Debug.Log($"{inventoryManager.listDrone.Count} {index}");
-        if (beeType == BeeType.Drone && inventoryManager.listDrone.Count > index)
+        if (beeType == BeeType.Drone)
         {
             RenderPage(inventoryManager.listDrone[index].list, index);
         }
-        else if (beeType == BeeType.Princess && inventoryManager.listPrincess.Count > index)
+        else if (beeType == BeeType.Princess)
         {
             RenderPage(inventoryManager.listPrincess[index].list, index);
         }
@@ -99,7 +99,8 @@ public class StorageManager : MonoBehaviour
 
     private void RenderPage(List<BeeItem> list, int indexSp)
     {
-        int countSlots = list.Count / 5 + 5;
+        int countSlots = list.Count / 5;
+        countSlots = countSlots * 5 + 5;
         int countHaveSlots = slots.Count;
 
         for (int i = 0; i < countSlots - countHaveSlots; ++i)

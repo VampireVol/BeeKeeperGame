@@ -10,7 +10,10 @@ public class StorageButton : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        storageContoller.OnButtonSelected(this);
+        if (slotStorage.icon.IsActive())
+        {
+            storageContoller.OnButtonSelected(this);
+        }
     }
 
     // Start is called before the first frame update
