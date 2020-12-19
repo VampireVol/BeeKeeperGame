@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Allele", menuName = "Allele")]
 public class Allele : ScriptableObject
@@ -14,6 +15,16 @@ public class Allele : ScriptableObject
         this.speed = speed;
         this.lifeSpan = lifeSpan;
         this.fertility = fertility;
+    }
+
+    public List<Chromosome> GetList()
+    {
+        var list = new List<Chromosome>();
+        list.Add(species);
+        list.Add(speed);
+        list.Add(lifeSpan);
+        list.Add(fertility);
+        return list;
     }
 }
 

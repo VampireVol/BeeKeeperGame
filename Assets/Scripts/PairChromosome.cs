@@ -2,6 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public class MutationPairChromosomeInfo
+{
+    public Species.ValueType value;
+    public bool isMain;
+
+    public MutationPairChromosomeInfo(Species.ValueType value, bool isMain)
+    {
+        this.value = value;
+        this.isMain = isMain;
+    }
+}
+
 [System.Serializable]
 public class PairChromosome
 {
@@ -12,6 +24,12 @@ public class PairChromosome
     {
         this.main = main;
         this.secondary = secondary;
+    }
+
+    public PairChromosome(Chromosome chromosome)
+    {
+        main = chromosome;
+        secondary = chromosome;
     }
 
     public Chromosome GetDominantChromosome()
@@ -28,6 +46,46 @@ public class PairChromosome
         {
             return main;
         }
+    }
+
+    public bool IsMutate(PairChromosome parent1, PairChromosome parent2)
+    {
+        //Проверка есть ли отличие 
+        if (parent1.main is Species m1 && 
+            parent1.secondary is Species s1 &&
+            parent2.main is Species m2 &&
+            parent2.secondary is Species s2)
+        {
+            if ((main != m1 && main != s1 && main != m2 && main != s2) ||
+                (secondary != m1 && secondary != s1 && secondary != m2 && secondary != s2))
+            {
+                Debug.Log("Mutation succses");
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public MutationPairChromosomeInfo GetMutationInfo(PairChromosome parent1, PairChromosome parent2)
+    {
+        if (parent1.main is Species m1 &&
+            parent1.secondary is Species s1 &&
+            parent2.main is Species m2 &&
+            parent2.secondary is Species s2)
+        {
+            if (main != m1 && main != s1 && main != m2 && main != s2)
+            {
+                return new MutationPairChromosomeInfo((Species.ValueType)main.GetValue(), true);
+            }
+            else if (secondary != m1 && secondary != s1 && secondary != m2 && secondary != s2)
+            {
+                return new MutationPairChromosomeInfo((Species.ValueType)secondary.GetValue(), false);
+            }
+        }
+
+        Debug.LogError("[PairChromosome::GetMutateType] Mutation error!");
+        return null;
     }
 
     public static PairChromosome Inherit(PairChromosome parent1, PairChromosome parent2)

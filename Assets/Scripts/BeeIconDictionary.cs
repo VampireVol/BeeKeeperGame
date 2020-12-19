@@ -18,7 +18,6 @@ public class BeeIconDictionary : MonoBehaviour
     [SerializeField]
     private List<SpeciesSprite> list;
 
-    // Start is called before the first frame update
     private void Awake()
     {
         dic = new Dictionary<Species.ValueType, List<Sprite>>();

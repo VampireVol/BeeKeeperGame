@@ -8,12 +8,18 @@ using UnityEngine.EventSystems;
 public class TabButton : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler
 {
     public TabGroup tabGroup;
+    //ПРЕНЕСТИ
+    public StorageManager storageManager;
 
     public Image background;
 
     public void OnPointerClick(PointerEventData eventData)
     {
         tabGroup.OnTabSelected(this);
+        if (storageManager != null)
+        {
+            storageManager.RenderPage(this.transform.GetSiblingIndex());
+        }
     }
 
     public void OnPointerEnter(PointerEventData eventData)

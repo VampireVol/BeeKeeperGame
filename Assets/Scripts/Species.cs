@@ -77,5 +77,23 @@ public class Species : Chromosome
     {
         return (int)value;
     }
+
+    public override bool Equals(object obj)
+    {
+        if (obj is Species species)
+        {
+            return value == species.value;
+        }
+        Debug.Log("[Species] You Equals not Species, lol");
+        return false;
+    }
+
+    public override int GetHashCode()
+    {
+        int hashCode = -2110463197;
+        hashCode = hashCode * -1521134295 + dominant.GetHashCode();
+        hashCode = hashCode * -1521134295 + value.GetHashCode();
+        return hashCode;
+    }
 }
 

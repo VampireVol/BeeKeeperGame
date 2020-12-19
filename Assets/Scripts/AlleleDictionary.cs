@@ -1,16 +1,39 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class AlleleDictionary
+public class AlleleDictionary : MonoBehaviour
 {
+    [System.Serializable]
+    private class SpeciesAllele
+    {
+        public Species.ValueType key;
+        public Allele value;
+    }
+
     private static Dictionary<Species.ValueType, Allele> KeyValues;
+
+    [SerializeField]
+    private List<SpeciesAllele> list;
+
+    private void Awake()
+    {
+        KeyValues = new Dictionary<Species.ValueType, Allele>();
+        Debug.Log("Awake Start");
+        foreach (var item in list)
+        {
+            KeyValues.Add(item.key, item.value);
+        }
+    }
 
     public AlleleDictionary()
     {
+        Debug.Log("Constr start");
         if (KeyValues != null)
+        {
             Debug.LogError("[AlleleDictionary] Dictionary already exist!");
-        KeyValues = new Dictionary<Species.ValueType, Allele>();
-        Init();
+            KeyValues = new Dictionary<Species.ValueType, Allele>();
+            Init();
+        }            
     }
 
     public static Allele GetAllele(Species.ValueType value)
