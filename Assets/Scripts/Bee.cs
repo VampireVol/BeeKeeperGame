@@ -25,6 +25,11 @@ public class Bee
         pairs = Inherit(parent1.pairs, parent2.pairs);
     }
 
+    public int GetFertility()
+    {
+        return pairs[3].main.GetValue();
+    }
+
     public override bool Equals(object obj)
     {
         if (obj is Bee bee)

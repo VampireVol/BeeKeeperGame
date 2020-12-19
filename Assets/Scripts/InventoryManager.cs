@@ -6,6 +6,7 @@ public class InventoryManager : MonoBehaviour
 {
     public List<SpeciesItem> listDrone;
     public List<SpeciesItem> listPrincess;
+    //public List<ProductionItem> listProduction;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +25,65 @@ public class InventoryManager : MonoBehaviour
         //{
         //    Debug.Log("bee1!=bee2");
         //}
+    }
+
+    public Bee GetBee(int speciesIndex, int beeIndex, BeeType typeIndex)
+    {
+        if (typeIndex == BeeType.Drone)
+        {
+            if (beeIndex == -1)
+            {
+                int index = Random.Range(0, listDrone[speciesIndex].list.Count);
+                listDrone[speciesIndex].list[index].count--;
+                listDrone[speciesIndex].count--;
+                Bee bee = listDrone[speciesIndex].list[index].bee;
+
+                if (listDrone[speciesIndex].list[index].count == 0)
+                {
+                    listDrone[speciesIndex].list.RemoveAt(index);
+                    if (listDrone[speciesIndex].count == 0)
+                    {
+                        listDrone.RemoveAt(speciesIndex);
+                    }
+                }
+
+                return bee;
+            }
+            else
+            {
+                return listDrone[speciesIndex].list[beeIndex].bee;
+            }
+            
+        } 
+        else if (typeIndex == BeeType.Princess)
+        {
+            if (beeIndex == -1)
+            {
+                int index = Random.Range(0, listPrincess[speciesIndex].list.Count);
+                listPrincess[speciesIndex].list[index].count--;
+                listPrincess[speciesIndex].count--;
+                Bee bee = listPrincess[speciesIndex].list[index].bee;
+                if (listPrincess[speciesIndex].list[index].count == 0)
+                {
+                    listPrincess[speciesIndex].list.RemoveAt(index);
+                    if (listPrincess[speciesIndex].count == 0)
+                    {
+                        listPrincess.RemoveAt(speciesIndex);
+                    }
+                }
+                return bee;
+            }
+            else
+            {
+                return listPrincess[speciesIndex].list[beeIndex].bee;
+            }
+            
+        } 
+        else
+        {
+            Debug.Log("[GetBee] somthing go wrong");
+            return null;
+        }
     }
 
     public void AddBee(Bee bee)
@@ -55,6 +115,7 @@ public class InventoryManager : MonoBehaviour
             if (item.species.Equals(bee.GetSpecies()))
             {
                 item.AddBee(bee);
+                list.Sort((x, y) => -x.count.CompareTo(y.count));
                 return;
             }
         }

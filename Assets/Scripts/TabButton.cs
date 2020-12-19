@@ -3,23 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Image))]
 public class TabButton : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler
 {
     public TabGroup tabGroup;
-    //ПРЕНЕСТИ
-    public StorageManager storageManager;
+    public UnityEvent onTabSelected;
+    public UnityEvent onTabDeselected;
 
     public Image background;
 
     public void OnPointerClick(PointerEventData eventData)
     {
         tabGroup.OnTabSelected(this);
-        if (storageManager != null)
-        {
-            storageManager.RenderPage(this.transform.GetSiblingIndex());
-        }
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -38,4 +35,24 @@ public class TabButton : MonoBehaviour, IPointerEnterHandler, IPointerClickHandl
         tabGroup.Subscribe(this);
     }
 
+    public void Select()
+    {
+        if (onTabSelected != null)
+        {
+            onTabSelected.Invoke();
+        }
+    }
+
+    public void Deselect()
+    {
+        if (onTabDeselected != null)
+        {
+            onTabDeselected.Invoke();
+        }
+    }
+
+    public void ButtonSelected()
+    {
+        tabGroup.OnTabSelected(this);
+    }
 }

@@ -10,7 +10,7 @@ public class Timer : MonoBehaviour
 
     [SerializeField]
     float time;
-    private bool isRunning = false;
+    public bool isRunning = false;
 
     // Start is called before the first frame update
     void Start()
@@ -39,7 +39,7 @@ public class Timer : MonoBehaviour
         }
     }
 
-    void SetTimer(float seconds)
+    public void SetTimer(float seconds)
     {
         isRunning = true;
         time = seconds;

@@ -38,10 +38,12 @@ public class SpeciesItem
             {
                 AddBee();
                 item.AddBee();
+                list.Sort((x, y) => -x.count.CompareTo(y.count));
                 return;
             }
         }
 
+        AddBee();
         AddItem(bee);
     }
 
