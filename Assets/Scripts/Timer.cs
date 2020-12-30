@@ -10,38 +10,46 @@ public class Timer : MonoBehaviour
 
     [SerializeField]
     float time;
-    public bool isRunning = false;
+
+    private System.DateTime timeEnd;
+
+    public bool isRunning()
+    {
+        return (timeEnd - System.DateTime.Now).TotalSeconds > 0;
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        isRunning = true;
+ 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (isRunning)
+        if (isRunning())
         {
-            if (time > 0)
-            {
-                int hours = Mathf.FloorToInt(time / 3600);
-                int min = Mathf.FloorToInt((time % 3600) / 60);
-                int sec = Mathf.FloorToInt((time % 3600) % 60);
-                timerText.text = $"{hours:00}:{min:00}:{sec:00}";
-                time -= Time.deltaTime;
-            }
-            else
-            {
-                timerText.text = $"00:00:00";
-                isRunning = false;
-            }
+            int timeLeft = (int)(timeEnd - System.DateTime.Now).TotalSeconds;
+            int hours = Mathf.FloorToInt(timeLeft / 3600);
+            int min = Mathf.FloorToInt((timeLeft % 3600) / 60);
+            int sec = Mathf.FloorToInt((timeLeft % 3600) % 60);
+            //Debug.Log((timeEnd - System.DateTime.Now).ToString("HH:mm:ss"));
+            //Debug.Log((timeEnd - System.DateTime.Now));
+            timerText.text = $"{hours:00}:{min:00}:{sec:00}";
+            //time -= Time.deltaTime;
         }
+        else
+        {
+            timerText.text = "00:00:00";
+        }
+
     }
 
     public void SetTimer(float seconds)
     {
-        isRunning = true;
+        timeEnd = System.DateTime.Now;
+        timeEnd = timeEnd.AddSeconds(seconds);
+        Debug.Log(System.DateTime.Now.Second - timeEnd.Second);
         time = seconds;
     }
 }

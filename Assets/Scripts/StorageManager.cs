@@ -66,7 +66,8 @@ public class StorageManager : MonoBehaviour
 
     private void RenderPage(List<SpeciesItem> list)
     {
-        int countSlots = list.Count / 5 + 5;
+        int countSlots = list.Count / 5;
+        countSlots = countSlots * 5 + 5;
         int countHaveSlots = slots.Count;
 
         for (int i = 0; i < countSlots - countHaveSlots; ++i)

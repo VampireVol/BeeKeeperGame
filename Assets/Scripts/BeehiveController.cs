@@ -54,7 +54,7 @@ public class BeehiveController : MonoBehaviour
 
     private void Update()
     {
-        if (state == State.Running && !timer.isRunning)
+        if (state == State.Running && !timer.isRunning())
         {
             button.interactable = true;
             state = State.NeedGet;
