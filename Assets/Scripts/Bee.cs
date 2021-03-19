@@ -3,6 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum BeeType
+{
+    Drone = 0,
+    Princess,
+    Queen
+}
+
 public class Bee
 {
     public List<PairChromosome> pairs;
@@ -100,11 +107,4 @@ public class Bee
             }            
         }        
     }
-}
-
-public enum BeeType
-{
-    Drone = 0,
-    Princess,
-    Queen
 }

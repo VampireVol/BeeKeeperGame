@@ -51,7 +51,6 @@ public class BeehiveController : MonoBehaviour
         }
     }
 
-
     private void Update()
     {
         if (state == State.Running && !timer.isRunning())

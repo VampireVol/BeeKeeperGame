@@ -367,13 +367,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2dcad15bf3d46fb44abb95fa20536b20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  List:
-  - {fileID: 11400000, guid: 6182fa463195c2f4da7213b03ad635c2, type: 2}
+  BeeList:
   - {fileID: 11400000, guid: fea54451576b92f45b5df444baebe716, type: 2}
-  - {fileID: 11400000, guid: ace7848ec42751c47abe316b407c836f, type: 2}
+  - {fileID: 11400000, guid: 6182fa463195c2f4da7213b03ad635c2, type: 2}
   - {fileID: 11400000, guid: f878439ae2e42f346a314910c6849a28, type: 2}
-  - {fileID: 11400000, guid: 3b02a89008e3a794ab7f4cc09248c16a, type: 2}
+  - {fileID: 11400000, guid: ace7848ec42751c47abe316b407c836f, type: 2}
   - {fileID: 11400000, guid: 10c3c01caaa46a740bbb9ded06d93e57, type: 2}
+  - {fileID: 11400000, guid: 3b02a89008e3a794ab7f4cc09248c16a, type: 2}
   SlotPrefab: {fileID: 3692594352505189343, guid: cf095a7ef3fb3b747814ca791f7a6beb,
     type: 3}
   Content: {fileID: 133441898}
@@ -639,7 +639,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &107886405
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4577,7 +4577,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: SlotHive (2)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1640771508, guid: 18ac0da99a841164990180c610a5f27b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 18ac0da99a841164990180c610a5f27b, type: 3}
 --- !u!1 &750431306
 GameObject:
@@ -13025,7 +13026,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: SlotHive (1)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1640771508, guid: 18ac0da99a841164990180c610a5f27b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 18ac0da99a841164990180c610a5f27b, type: 3}
 --- !u!1 &2141882009
 GameObject:

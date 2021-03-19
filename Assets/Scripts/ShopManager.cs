@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ShopManager : MonoBehaviour
 {
-    public List<BeeShopItem> List;
+    public List<BeeShopItem> BeeList;
     public GameObject SlotPrefab;
     public Transform Content;
     public BeeIconDictionary iconDictionary;
@@ -13,7 +13,7 @@ public class ShopManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        foreach (var item in List)
+        foreach (var item in BeeList)
         {
             GameObject newSlot = Instantiate(SlotPrefab, new Vector3(0, 0, 0), Quaternion.identity);
             float scaleValue = Screen.width / 1080f;
@@ -29,6 +29,6 @@ public class ShopManager : MonoBehaviour
     public void TryAddItemInInventory(int index)
     {
         Debug.Log($"Chose butn: {index}");
-        inventoryManager.AddBee(new Bee(AlleleDictionary.GetAllele(List[index].ValueType), List[index].BeeType));
+        inventoryManager.AddBee(new Bee(AlleleDictionary.GetAllele(BeeList[index].ValueType), BeeList[index].BeeType));
     }
 }
