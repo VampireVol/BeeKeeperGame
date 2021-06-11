@@ -12,11 +12,11 @@ public class DescriptionManager : MonoBehaviour
     public void Show(int speciesIndex, int beeIndex, BeeType beeType, string count)
     {
         descriptionArea.Setup(inventoryManager.GetBee(speciesIndex, beeIndex, beeType), count);
-        descriptionArea.transform.localPosition = new Vector3(0f, -650f, 0f);
-        scrollArea.GetComponent<RectTransform>().sizeDelta = new Vector2(0f, 950f);
+        descriptionArea.transform.localPosition = new Vector3(0f, 10f, 0f);
+        //scrollArea.GetComponent<RectTransform>().sizeDelta = new Vector2(0f, 950f);
         scrollArea.transform.localPosition = new Vector3(0f, -255f, 0f);
         descriptionArea.transform.gameObject.SetActive(true);
-        StartCoroutine(SetScrollDown());
+        //StartCoroutine(SetScrollDown());
         
     }
 

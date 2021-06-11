@@ -25,6 +25,7 @@ public class StorageContoller : MonoBehaviour
         {
             if (button.slotStorage.count.text == "1")
             {
+                storageManager.RenderPageSlots((int)StorageManager.RenderState.SecondBarOnly, button.slotStorage.indexSpecies, button.transform.GetSiblingIndex());
                 descriptionManager.Show(button.transform.GetSiblingIndex(), 0, button.slotStorage.beeType, button.slotStorage.count.text);
             }
             else
@@ -34,6 +35,7 @@ public class StorageContoller : MonoBehaviour
         }
         else
         {
+            storageManager.RenderPageSlots((int)StorageManager.RenderState.SecondBarOnly, button.slotStorage.indexSpecies, button.transform.GetSiblingIndex());
             descriptionManager.Show(button.slotStorage.indexSpecies, button.transform.GetSiblingIndex(), button.slotStorage.beeType, button.slotStorage.count.text);
         }
     }

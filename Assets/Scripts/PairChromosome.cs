@@ -110,7 +110,7 @@ public class PairChromosome
             choice2 = parent2.secondary;
         }
 
-        var mutation = choice1.TryMutate(choice2);
+        var mutation = choice1.TryMutate(choice2); //наверно тут мог бы и в статике тоже прописать
         if (mutation != null)
         {
             if (Random.value >= 0.5f)
