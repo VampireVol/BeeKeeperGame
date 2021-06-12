@@ -68,12 +68,12 @@ public class StorageManager : MonoBehaviour
 
         var posGl = pageCounter.transform.position;
 
-        posGl.y = (Screen.height / scaleValue - topBarHeight - secondBarHeight - (countRow - 2) * slotHeight - 60);
+        posGl.y = (Screen.height / scaleValue - topBarHeight - secondBarHeight - (countRow - 2) * slotHeight) * scaleValue / 2;
         pageCounter.transform.position = posGl;
 
         pageCounterDownPositiron = (int)pageCounter.transform.position.y;
         pageCounterTopPosition = (int)(Screen.height / scaleValue - secondBarHeight - 2 * slotHeight - 60);
-        Debug.Log(pageCounterTopPosition);
+        Debug.Log(pageCounterDownPositiron);
 
         for (int i = 0; i < countSlots - countHaveSlots; ++i)
         {
