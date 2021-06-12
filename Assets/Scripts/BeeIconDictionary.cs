@@ -13,6 +13,10 @@ public class SpeciesSprite
 }
 public class BeeIconDictionary : MonoBehaviour
 {
+    private static BeeIconDictionary _instance;
+
+    public static BeeIconDictionary Instance { get { return _instance; } }
+
     private Dictionary<Species.ValueType, List<Sprite>> dic;
 
     [SerializeField]
@@ -20,6 +24,15 @@ public class BeeIconDictionary : MonoBehaviour
 
     private void Awake()
     {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            _instance = this;
+        }
+
         dic = new Dictionary<Species.ValueType, List<Sprite>>();
         foreach (var item in list)
         {

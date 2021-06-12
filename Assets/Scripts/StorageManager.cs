@@ -5,6 +5,22 @@ using UnityEngine.UI;
 
 public class StorageManager : MonoBehaviour
 {
+    public enum RenderState
+    {
+        Standart,
+        SecondBarOnly,
+        WithoutSecondBar,
+        FullPage
+    }
+
+    public enum RenderType
+    {
+        SpeciesItem,
+        BeeItem,
+        ProductionItem,
+        CombItem
+    }
+
     public InventoryManager inventoryManager;
     public BeeIconDictionary iconDictionary;
     public List<SlotStorage> slots;
@@ -13,16 +29,14 @@ public class StorageManager : MonoBehaviour
     public GameObject topBar;
     public GameObject secondBar;
     public GameObject slotArea;
+    public GameObject pageCounter;
     public Transform content;
-    
 
-    public enum RenderState
-    {
-        Standart,
-        SecondBarOnly,
-        WithoutSecondBar,
-        FullPage
-    }
+    private RenderState renderState;
+    private RenderType renderType;
+    private int curPage = 1;
+    
+    
 
     private const float standartWidth = 1080f;
     private const float topBarHeight = 300f;
@@ -36,6 +50,8 @@ public class StorageManager : MonoBehaviour
     private int secondBarDownPosition;
     private int slotsAreaTopPosition;
     private int slotsAreaDownPosition;
+    private int pageCounterTopPosition;
+    private int pageCounterDownPositiron;
 
     // Start is called before the first frame update
     void Start()
@@ -46,8 +62,29 @@ public class StorageManager : MonoBehaviour
         slotsAreaTopPosition = (int)(slotArea.transform.position.y + topBarHeight * scaleValue);
         slotsAreaDownPosition = (int)slotArea.transform.position.y;
 
+        int countRow = Mathf.FloorToInt((Screen.height / scaleValue - secondBarHeight) / slotHeight);
+        int countSlots = countRow * slotsInRow;
+        int countHaveSlots = slots.Count;
 
+        var posGl = pageCounter.transform.position;
 
+        posGl.y = (Screen.height / scaleValue - topBarHeight - secondBarHeight - (countRow - 2) * slotHeight - 60);
+        pageCounter.transform.position = posGl;
+
+        pageCounterDownPositiron = (int)pageCounter.transform.position.y;
+        pageCounterTopPosition = (int)(Screen.height / scaleValue - secondBarHeight - 2 * slotHeight - 60);
+        Debug.Log(pageCounterTopPosition);
+
+        for (int i = 0; i < countSlots - countHaveSlots; ++i)
+        {
+            GameObject newSlot = Instantiate(slotPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+            Vector3 scale = new Vector3(scaleValue, scaleValue);
+            newSlot.transform.localScale = scale;
+            newSlot.transform.SetParent(content);
+
+            var slotStorage = newSlot.GetComponent<SlotStorage>();
+            slots.Add(slotStorage);
+        }
     }
 
     // Update is called once per frame
@@ -61,28 +98,49 @@ public class StorageManager : MonoBehaviour
 
     }
 
-    //Execute from Inspector
-    public void RenderPageSlots(int index, int i1, int i2)
+    public void SetRenderState(int index)
+    {
+        renderState = (RenderState)index;
+        SetObjectPositon();
+        //start render func
+    }
+
+    public void SetRenderType(int index)
+    {
+        renderType = (RenderType)index;
+        //start render func
+    }
+
+    public void SetRenderStateAndRenderType(int state, int type)
+    {
+        renderState = (RenderState)state;
+        renderType = (RenderType)type;
+        //start render func
+    }
+
+    private void SetObjectPositon()
     {
         int countSlots = 0;
         int countRow = 0;
-        var state = (RenderState) index;
-        
-        if (state == RenderState.Standart)
+        if (renderState == RenderState.Standart)
         {
+            //back position!!!!
             countRow = Mathf.FloorToInt((Screen.height / scaleValue - topBarHeight - secondBarHeight) / slotHeight);
             countSlots = countRow * slotsInRow;
         }
-        else if (state == RenderState.SecondBarOnly)
+        else if (renderState == RenderState.SecondBarOnly)
         {
+
             topBar.SetActive(false);
             var pos = secondBar.transform.position;
             secondBar.transform.position = new Vector3(pos.x, secondBarTopPosition, pos.z);
             pos = slotArea.transform.position;
             slotArea.transform.position = new Vector3(pos.x, slotsAreaTopPosition, pos.z);
+            pos = pageCounter.transform.position;
+            pageCounter.transform.position = new Vector3(pos.x, pageCounterTopPosition, pos.z);
             countSlots = 10;
         }
-        else if (state == RenderState.FullPage)
+        else if (renderState == RenderState.FullPage)
         {
             countRow = Mathf.FloorToInt((Screen.height / scaleValue - secondBarHeight) / slotHeight);
             topBar.SetActive(false);
@@ -90,30 +148,31 @@ public class StorageManager : MonoBehaviour
             content.position = new Vector3(0f, content.position.y - topBarHeight * scaleValue, 0f);
             countSlots = countRow * slotsInRow;
         }
-        int countHaveSlots = slots.Count;
-        for (int i = 0; i < countSlots - countHaveSlots; ++i)
-        {
-            GameObject newSlot = Instantiate(slotPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-            Vector3 scale = new Vector3(scaleValue, scaleValue);
-            newSlot.transform.localScale = scale;
-            newSlot.transform.SetParent(content);
+    }
 
-            var slotStorage = newSlot.GetComponent<SlotStorage>();
-            slots.Add(slotStorage);
-        }
+    //Execute from Inspector (no may be)
+    public void RenderPageSlots(int index, int i1, int i2)
+    {
+        //temp
+        int countSlots = 10;
 
+        var state = (RenderState) index;
+        renderState = state;
+        SetObjectPositon();
+
+        Debug.Log(i1);
         ClearAllSlots();
-        var list = inventoryManager.listDrone[i1].list;
+        var list = inventoryManager.listDrone[i2].list;
         for (int i = 0; i < list.Count; ++i)
         {
             var item = list[i];
             Sprite sprite = iconDictionary.GetSprites(item.bee.GetSpecies())[(int)item.bee.type];
-            slots[i].Setup(sprite, item.count, this, item.bee.type, i1);
+            slots[i].Setup(sprite, item.count, this, SlotStorage.ItemType.BeeItem, item, item.bee.type, i2);
         }
         content.gameObject.SetActive(true);
         for (int i = 0; i < countSlots; ++i)
         {
-            slots[i].transform.parent.gameObject.SetActive(true);
+            slots[i].transform.gameObject.SetActive(true);
         }
     }
 
@@ -135,7 +194,7 @@ public class StorageManager : MonoBehaviour
             ClearAllSlots();
             foreach (var slot in slots)
             {
-                slot.transform.parent.gameObject.SetActive(true);
+                slot.transform.gameObject.SetActive(true);
             }
         }
     }
@@ -170,7 +229,7 @@ public class StorageManager : MonoBehaviour
             var slotStorage = newSlot.GetComponent<SlotStorage>();
             slots.Add(slotStorage);
         }
-
+        Debug.Log(countSlots);
         ClearAllSlots();
 
         for (int i = 0; i < list.Count; ++i)
@@ -178,13 +237,13 @@ public class StorageManager : MonoBehaviour
             var item = list[i];
 
             Sprite sprite = iconDictionary.GetSprites(item.species)[(int)item.beeType];
-            slots[i].Setup(sprite, item.count, this, item.beeType);
+            slots[i].Setup(sprite, item.count, this, SlotStorage.ItemType.SpeciesItem, item, item.beeType);
         }
 
-        for (int i = 0; i < countSlots; ++i)
+        for (int i = 0; i < slots.Count - 10; ++i)
         {
-            slots[i].transform.parent.gameObject.SetActive(true);
-        }
+            slots[i].transform.gameObject.SetActive(true);
+        }        
     }
 
     private void RenderPage(List<BeeItem> list, int indexSp)
@@ -193,30 +252,18 @@ public class StorageManager : MonoBehaviour
         countSlots = countSlots * 5 + 5;
         int countHaveSlots = slots.Count;
 
-        for (int i = 0; i < countSlots - countHaveSlots; ++i)
-        {
-            GameObject newSlot = Instantiate(slotPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-            float scaleValue = Screen.width / 1080f;
-            Vector3 scale = new Vector3(scaleValue, scaleValue);
-            newSlot.transform.localScale = scale;
-            newSlot.transform.SetParent(content);
-
-            var slotStorage = newSlot.GetComponent<SlotStorage>();
-            slots.Add(slotStorage);
-        }
-
         ClearAllSlots();
 
         for (int i = 0; i < list.Count; ++i)
         {
             var item = list[i];
             Sprite sprite = iconDictionary.GetSprites(item.bee.GetSpecies())[(int)item.bee.type];
-            slots[i].Setup(sprite, item.count, this, item.bee.type, indexSp);
+            slots[i].Setup(sprite, item.count, this, SlotStorage.ItemType.BeeItem, item, item.bee.type, indexSp);
         }
 
         for (int i = 0; i < countSlots; ++i)
         {
-            slots[i].transform.parent.gameObject.SetActive(true);
+            slots[i].transform.gameObject.SetActive(true);
         }
     }
 
@@ -225,7 +272,7 @@ public class StorageManager : MonoBehaviour
         foreach (var slot in slots)
         {
             slot.Clear();
-            slot.transform.parent.gameObject.SetActive(false);
+            slot.transform.gameObject.SetActive(false);
         }
     }
 }

@@ -8,7 +8,6 @@ public class StorageContoller : MonoBehaviour
     public DescriptionManager descriptionManager;
     public StorageManager storageManager;
 
-
     public void Subscribe(StorageButton button)
     {
         if (storageButtons == null)
@@ -23,7 +22,9 @@ public class StorageContoller : MonoBehaviour
     {
         if (button.slotStorage.indexSpecies == -1)
         {
-            if (button.slotStorage.count.text == "1")
+            var item = (SpeciesItem)(button.slotStorage.item);
+            
+            if (item.list.Count == 1)
             {
                 storageManager.RenderPageSlots((int)StorageManager.RenderState.SecondBarOnly, button.slotStorage.indexSpecies, button.transform.GetSiblingIndex());
                 descriptionManager.Show(button.transform.GetSiblingIndex(), 0, button.slotStorage.beeType, button.slotStorage.count.text);
