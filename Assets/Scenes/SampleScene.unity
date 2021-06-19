@@ -11916,6 +11916,7 @@ GameObject:
   - component: {fileID: 1832770169}
   - component: {fileID: 1832770168}
   - component: {fileID: 1832770170}
+  - component: {fileID: 1832770171}
   m_Layer: 5
   m_Name: PrincessButton
   m_TagString: Untagged
@@ -12011,6 +12012,19 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   background: {fileID: 1832770168}
+--- !u!114 &1832770171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1832770166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a62a0a10c1da894baca6956a76bd41f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  render: 0
 --- !u!1 &1841179330
 GameObject:
   m_ObjectHideFlags: 0
@@ -13097,7 +13111,7 @@ GameObject:
   - component: {fileID: 2033334600}
   - component: {fileID: 2033334599}
   m_Layer: 0
-  m_Name: StorageManager
+  m_Name: StorageHendler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

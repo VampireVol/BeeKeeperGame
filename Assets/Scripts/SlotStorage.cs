@@ -21,9 +21,9 @@ public class SlotStorage : MonoBehaviour
 
     
 
-    private StorageManager storageManager;
+    private StorageHendler storageManager;
 
-    public void Setup(Sprite sprite, int count, StorageManager sm, ItemType itemType, object item, BeeType beeType = BeeType.Drone, int index = -1)
+    public void Setup(Sprite sprite, int count, StorageHendler sm, ItemType itemType, object item, BeeType beeType = BeeType.Drone, int index = -1)
     {
         icon.sprite = sprite;
         this.count.text = count.ToString();

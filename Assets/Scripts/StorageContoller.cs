@@ -6,7 +6,7 @@ public class StorageContoller : MonoBehaviour
 {
     public List<StorageButton> storageButtons;
     public DescriptionManager descriptionManager;
-    public StorageManager storageManager;
+    public StorageHendler storageManager;
 
     public void Subscribe(StorageButton button)
     {
@@ -26,7 +26,7 @@ public class StorageContoller : MonoBehaviour
             
             if (item.list.Count == 1)
             {
-                storageManager.RenderPageSlots((int)StorageManager.RenderState.SecondBarOnly, button.slotStorage.indexSpecies, button.transform.GetSiblingIndex());
+                storageManager.RenderPageSlots((int)StorageHendler.RenderState.SecondBarOnly, button.slotStorage.indexSpecies, button.transform.GetSiblingIndex());
                 descriptionManager.Show(button.transform.GetSiblingIndex(), 0, button.slotStorage.beeType, button.slotStorage.count.text);
             }
             else
@@ -36,7 +36,7 @@ public class StorageContoller : MonoBehaviour
         }
         else
         {
-            storageManager.RenderPageSlots((int)StorageManager.RenderState.SecondBarOnly, button.slotStorage.indexSpecies, button.transform.GetSiblingIndex());
+            storageManager.RenderPageSlots((int)StorageHendler.RenderState.SecondBarOnly, button.slotStorage.indexSpecies, button.transform.GetSiblingIndex());
             descriptionManager.Show(button.slotStorage.indexSpecies, button.transform.GetSiblingIndex(), button.slotStorage.beeType, button.slotStorage.count.text);
         }
     }

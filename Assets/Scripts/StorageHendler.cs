@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StorageManager : MonoBehaviour
+public class StorageHendler : MonoBehaviour
 {
     public enum RenderState
     {
@@ -21,6 +21,22 @@ public class StorageManager : MonoBehaviour
         CombItem
     }
 
+    [System.Serializable]
+    public enum Render
+    {
+        DroneStorage,
+        PrincesStorage,
+        ProductionStorage,
+        DroneStorageDescription,
+        PrincesStorageDescription,
+        ProductionStorageDescription
+    }
+
+    public void SetRenderDecision(StorageRenderDecision render)
+    {
+
+    }
+
     public InventoryManager inventoryManager;
     public BeeIconDictionary iconDictionary;
     public List<SlotStorage> slots;
@@ -28,7 +44,7 @@ public class StorageManager : MonoBehaviour
     public GameObject slotPrefab;
     public GameObject topBar;
     public GameObject secondBar;
-    public GameObject slotArea;
+    public GameObject slotsArea;
     public GameObject pageCounter;
     public Transform content;
 
@@ -43,7 +59,8 @@ public class StorageManager : MonoBehaviour
     private const float secondBarHeight = 160f;
     private const float slotHeight = 200f;
     private const int slotsInRow = 5;
-    
+
+    private int maxCountSlots;
     private float scaleValue = Screen.width / standartWidth;
 
     private int secondBarTopPosition;
@@ -59,23 +76,22 @@ public class StorageManager : MonoBehaviour
         slots = new List<SlotStorage>();
         secondBarTopPosition = (int)(secondBar.transform.position.y + topBarHeight * scaleValue);
         secondBarDownPosition = (int)secondBar.transform.position.y;
-        slotsAreaTopPosition = (int)(slotArea.transform.position.y + topBarHeight * scaleValue);
-        slotsAreaDownPosition = (int)slotArea.transform.position.y;
+        slotsAreaTopPosition = (int)(slotsArea.transform.position.y + topBarHeight * scaleValue);
+        slotsAreaDownPosition = (int)slotsArea.transform.position.y;
 
-        int countRow = Mathf.FloorToInt((Screen.height / scaleValue - secondBarHeight) / slotHeight);
-        int countSlots = countRow * slotsInRow;
-        int countHaveSlots = slots.Count;
+        int maxCountRow = Mathf.FloorToInt((Screen.height / scaleValue - secondBarHeight) / slotHeight);
+        maxCountSlots = maxCountRow * slotsInRow;
 
         var posGl = pageCounter.transform.position;
 
-        posGl.y = (Screen.height / scaleValue - topBarHeight - secondBarHeight - (countRow - 2) * slotHeight) * scaleValue / 2;
+        posGl.y = (Screen.height / scaleValue - topBarHeight - secondBarHeight - (maxCountRow - 2) * slotHeight) * scaleValue / 2;
         pageCounter.transform.position = posGl;
 
         pageCounterDownPositiron = (int)pageCounter.transform.position.y;
         pageCounterTopPosition = (int)(Screen.height / scaleValue - secondBarHeight - 2 * slotHeight - 60);
         Debug.Log(pageCounterDownPositiron);
 
-        for (int i = 0; i < countSlots - countHaveSlots; ++i)
+        for (int i = 0; i < maxCountSlots; ++i)
         {
             GameObject newSlot = Instantiate(slotPrefab, new Vector3(0, 0, 0), Quaternion.identity);
             Vector3 scale = new Vector3(scaleValue, scaleValue);
@@ -87,15 +103,112 @@ public class StorageManager : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void RenderSpeciesDroneStorage()
     {
-        
+        SetDefaultPosition();
+        int countSlots = maxCountSlots - 10;
+        var list = inventoryManager.listDrone;
+        SetupSpeciesItem(list, countSlots);
+        ActivateSlots(countSlots);
+    }
+    public void RenderSpeciesDroneStorageDescription(int choiceIndex)
+    {
+        SetDescriptionPosition();
+        int countSlots = 10;
+        var list = inventoryManager.listDrone;
+        SetupSpeciesItem(list, countSlots);
+        ActivateSlots(countSlots);
+    }
+    public void RenderDroneStorage(int speciesItemIndex)
+    {
+        SetDefaultPosition();
+        int countSlots = maxCountSlots - 10;
+        var list = inventoryManager.listDrone[speciesItemIndex].list;
+        SetupBeeItem(list, countSlots, speciesItemIndex);
+        ActivateSlots(countSlots);
+    }
+    public void RenderDroneStorageDescription(int speciesItemIndex, int choiceIndex)
+    {
+        SetDescriptionPosition();
+        int countSlots = 10;
+        var list = inventoryManager.listDrone[speciesItemIndex].list;
+        SetupBeeItem(list, countSlots, speciesItemIndex);
     }
 
-    public void ShowDescription(int indexSpecies, int indexBee)
+    public void RenderSpeciesPrincesStorage()
     {
 
+    }
+    public void RenderSpeciesPrincesStorageDescription(int choiceIndex)
+    {
+
+    }
+    public void RenderPrincesStorage(int speciesItemIndex)
+    {
+
+    }
+    public void RenderPrincesStorageDescription(int speciesItemIndex, int choiceIndex)
+    {
+
+    }
+
+    public void RenderProductionStorage()
+    {
+
+    }
+    public void RenderProductionStorageDescription(int choiceIndex)
+    {
+
+    }
+
+    private void SetDefaultPosition()
+    {
+        ClearAllSlots();
+        topBar.SetActive(true);
+        secondBar.SetActive(true);
+        var position = secondBar.transform.position;
+        secondBar.transform.position = new Vector3(position.x, secondBarTopPosition);
+        position = slotsArea.transform.position;
+        slotsArea.transform.position = new Vector3(position.x, slotsAreaTopPosition);
+    }
+
+    private void SetDescriptionPosition()
+    {
+        ClearAllSlots();
+        topBar.SetActive(false);
+        secondBar.SetActive(true);
+        var position = secondBar.transform.position;
+        secondBar.transform.position = new Vector3(position.x, secondBarDownPosition);
+        position = slotsArea.transform.position;
+        slotsArea.transform.position = new Vector3(position.x, slotsAreaDownPosition);
+    }
+
+    private void SetupSpeciesItem(List<SpeciesItem> list, int countSlots)
+    {
+        for (int i = 0; i < list.Count; ++i)
+        {
+            var item = list[i];
+            Sprite sprite = iconDictionary.GetSprites(item.species)[(int)item.beeType];
+            slots[i].Setup(sprite, item.count, this, SlotStorage.ItemType.SpeciesItem, item, item.beeType);
+        }
+        ActivateSlots(countSlots);
+    }
+
+    private void SetupBeeItem(List<BeeItem> list, int countSlots, int speciesItemIndex)
+    {
+        for (int i = 0; i < list.Count; ++i)
+        {
+            var item = list[i];
+            Sprite sprite = iconDictionary.GetSprites(item.bee.GetSpecies())[(int)item.bee.type];
+            slots[i].Setup(sprite, item.count, this, SlotStorage.ItemType.BeeItem, item, item.bee.type, speciesItemIndex);
+        }
+        ActivateSlots(countSlots);
+    }
+
+    private void ActivateSlots(int count)
+    {
+        for (int i = 0; i < count; ++i)
+            slots[i].transform.gameObject.SetActive(true);
     }
 
     public void SetRenderState(int index)
@@ -134,8 +247,8 @@ public class StorageManager : MonoBehaviour
             topBar.SetActive(false);
             var pos = secondBar.transform.position;
             secondBar.transform.position = new Vector3(pos.x, secondBarTopPosition, pos.z);
-            pos = slotArea.transform.position;
-            slotArea.transform.position = new Vector3(pos.x, slotsAreaTopPosition, pos.z);
+            pos = slotsArea.transform.position;
+            slotsArea.transform.position = new Vector3(pos.x, slotsAreaTopPosition, pos.z);
             pos = pageCounter.transform.position;
             pageCounter.transform.position = new Vector3(pos.x, pageCounterTopPosition, pos.z);
             countSlots = 10;
