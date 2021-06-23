@@ -17,10 +17,10 @@ public class BeeIconDictionary : MonoBehaviour
 
     public static BeeIconDictionary Instance { get { return _instance; } }
 
-    private Dictionary<Species.ValueType, List<Sprite>> dic;
+    private Dictionary<Species.ValueType, List<Sprite>> _dictionary;
 
     [SerializeField]
-    private List<SpeciesSprite> list;
+    private List<SpeciesSprite> _list;
 
     private void Awake()
     {
@@ -33,10 +33,10 @@ public class BeeIconDictionary : MonoBehaviour
             _instance = this;
         }
 
-        dic = new Dictionary<Species.ValueType, List<Sprite>>();
-        foreach (var item in list)
+        _dictionary = new Dictionary<Species.ValueType, List<Sprite>>();
+        foreach (var item in _list)
         {
-            dic.Add(item.value, new List<Sprite>()
+            _dictionary.Add(item.value, new List<Sprite>()
             {
                 item.drone,
                 item.princess,
@@ -47,6 +47,14 @@ public class BeeIconDictionary : MonoBehaviour
 
     public List<Sprite> GetSprites(Species.ValueType value)
     {
-        return dic[value];
+        try 
+        {
+            return _dictionary[value];
+        }
+        catch (KeyNotFoundException)
+        {
+            Debug.LogError($"[BeeIconDictionary] icon for {value} is null");
+            return null;
+        }
     }
 }
