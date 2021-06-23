@@ -330,6 +330,7 @@ GameObject:
   - component: {fileID: 74656227}
   - component: {fileID: 74656229}
   - component: {fileID: 74656228}
+  - component: {fileID: 74656230}
   m_Layer: 5
   m_Name: LeftArrow
   m_TagString: Untagged
@@ -393,6 +394,60 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 74656226}
   m_CullTransparentMesh: 0
+--- !u!114 &74656230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 74656226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 74656228}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2033334599}
+        m_MethodName: PrevPage
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!224 &75703856 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4693135192219846207, guid: 50282aa809ba93b4395ec4452fe16e09,
@@ -690,7 +745,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ad660148e2af6543a16c42404db1ef5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  list:
+  _list:
   - value: 0
     drone: {fileID: 21300000, guid: 777d774f8e436834680476acd5f6aa56, type: 3}
     princess: {fileID: 21300000, guid: 7cfb77d054e29134398417bf78a7c7bb, type: 3}
@@ -5314,6 +5369,7 @@ GameObject:
   - component: {fileID: 829123977}
   - component: {fileID: 829123979}
   - component: {fileID: 829123978}
+  - component: {fileID: 829123980}
   m_Layer: 5
   m_Name: RightArrow
   m_TagString: Untagged
@@ -5377,6 +5433,60 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 829123976}
   m_CullTransparentMesh: 0
+--- !u!114 &829123980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 829123976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 829123978}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2033334599}
+        m_MethodName: NextPage
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &842722797
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13129,16 +13239,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14add8376a84112448389f6d7a546cc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventoryManager: {fileID: 590475458}
-  iconDictionary: {fileID: 127122397}
-  slots: []
-  slotPrefab: {fileID: 6973249540391905954, guid: 50282aa809ba93b4395ec4452fe16e09,
+  _inventoryManager: {fileID: 590475458}
+  _iconDictionary: {fileID: 127122397}
+  _slotPrefab: {fileID: 6973249540391905954, guid: 50282aa809ba93b4395ec4452fe16e09,
     type: 3}
-  topBar: {fileID: 750431306}
-  secondBar: {fileID: 2141882009}
-  slotArea: {fileID: 720607476}
-  pageCounter: {fileID: 1731346513}
-  content: {fileID: 99325153}
+  _topBar: {fileID: 750431306}
+  _secondBar: {fileID: 2141882009}
+  _slotsArea: {fileID: 1024472722}
+  _pageCounter: {fileID: 1731346513}
+  _content: {fileID: 99325153}
 --- !u!4 &2033334600
 Transform:
   m_ObjectHideFlags: 0
